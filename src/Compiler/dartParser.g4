@@ -9,14 +9,16 @@ declear_var:  TYPE?  VAR_NAME  (EQUAL  val )?( COLON  VAR_NAME  (EQUAL  val )?)*
 
 string_val:  STRING_OPEN STRING_VAL? STRING_CLOSE ;
 
-val: string_val |NUM_VAL |BOOL_VAL;
+val: string_val |NUM_VAL |BOOL_VAL|VAR_NAME OPEN_PR INDEX CLOSE_PR OPEN_PR string_val CLOSE_PR;
 
 ifdart:
 VAR_NAME EQUAL EQUAL string_val Q_MARK widget D_DOT widget;
 
-arguments: OPEN_HEAD  TYPE?  VAR_NAME?  ( COLON TYPE  VAR_NAME )*CLOSE_HEAD ;
+arguments: OPEN_HEAD OPEN_BODY  REQUIRED? TYPE?  VAR_NAME?  ( COLON TYPE  VAR_NAME )*CLOSE_BODY CLOSE_HEAD SIMICOLON;
 
 block:OPEN_BODY  declear_var*  CLOSE_BODY;
+
+constructor: VAR_NAME arguments ;
 
 function:(TYPE|VOID)  VAR_NAME   arguments*   block;
 
@@ -41,7 +43,7 @@ runapp:RUNAPP OPEN_HEAD VAR_NAME OPEN_HEAD CLOSE_HEAD CLOSE_HEAD SIMICOLON;
 // CLASSES //
 
 
-class_less:CLASS  VAR_NAME  EXTENDS  LESS OPEN_BODY declear_var* OVERRIDE build CLOSE_BODY;
+class_less:CLASS  VAR_NAME  EXTENDS  LESS OPEN_BODY declear_var* constructor? OVERRIDE build CLOSE_BODY;
 class_full:class_full1 class_full2 ;
 class_full1:CLASS VAR_NAME  EXTENDS  FULL OPEN_BODY const? OVERRIDE state CLOSE_BODY ;
 
@@ -51,7 +53,7 @@ const:CONST VAR_NAME OPEN_HEAD OPEN_BODY KEY Q_MARK KEY CLOSE_BODY CLOSE_HEAD
 state:STATE  BIGER VAR_NAME SMALLER CREATSTATE OPEN_HEAD CLOSE_HEAD Return VAR_NAME OPEN_HEAD CLOSE_HEAD SIMICOLON
 ;
 
-class_full2:CLASS  VAR_NAME  EXTENDS STATE  BIGER VAR_NAME SMALLER OPEN_BODY declear_var*
+class_full2:CLASS  VAR_NAME  EXTENDS STATE  BIGER VAR_NAME SMALLER OPEN_BODY declear_var* constructor?
  OVERRIDE initstate OVERRIDE build CLOSE_BODY;
 
 initstate:
@@ -70,7 +72,7 @@ child:CHILD D_DOT widget;
 //MaterialApp Declerationa and components//
 materialapp:GMA OPEN_HEAD (title COLON)? (theme COLON)? (debugshowmode COLON)? home CLOSE_HEAD;
 //get.to(name())
-navigate_screen:GET1 DOT (TO|OFF) OPEN_HEAD VAR_NAME OPEN_HEAD CLOSE_HEAD CLOSE_HEAD SIMICOLON  ;
+navigate_screen:GET1 DOT (TO|OFF) OPEN_HEAD VAR_NAME OPEN_HEAD (VAR_NAME D_DOT (val) (COLON VAR_NAME D_DOT (val))*)? CLOSE_HEAD CLOSE_HEAD SIMICOLON  ;
 home:HOME D_DOT VAR_NAME OPEN_HEAD CLOSE_HEAD ;
 title:TITLE D_DOT string_val;
 theme:THEME D_DOT ThemeData OPEN_HEAD PrimarySwatch D_DOT colors COLON  CLOSE_HEAD ;

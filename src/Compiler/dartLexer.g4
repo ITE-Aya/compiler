@@ -194,6 +194,7 @@ CONST:    'const';
 
 VAR:    'var' ;
 
+REQUIRED: 'required';
 
 ASYNC:    'async'    ;
 

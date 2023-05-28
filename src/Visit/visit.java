@@ -58,7 +58,7 @@ public class visit extends dartParserBaseVisitor {
     symbolTable st = new symbolTable();
     scope currentScope;
     RuntimeException e;
-    ArrayList<String> myPackage = new ArrayList<>(Arrays.asList("package:flutter/cupertino.dart","package:flutter/material.dart","package:flutter/rendering.dart"));
+    ArrayList<String> myPackage = new ArrayList<>(Arrays.asList("'package:flutter/cupertino.dart'","'package:flutter/material.dart'","'package:flutter/rendering.dart'"));
 
     @Override
     public navigate visitNavigate_screen(dartParser.Navigate_screenContext ctx) {
@@ -100,7 +100,7 @@ public class visit extends dartParserBaseVisitor {
     public Import visitImporT(dartParser.ImporTContext ctx) {
         Import I = new Import();
         I.addchild(visitString_val(ctx.string_val()));
-     //   I.checkArray(myPackage);
+        I.checkArray(myPackage);
         return I;
     }
 
@@ -513,7 +513,7 @@ public class visit extends dartParserBaseVisitor {
         runapp r = new runapp();
         r.setchild(v);
         if (currentScope.lookup(ctx.VAR_NAME().toString()) == null) {
-            e = new RuntimeException("The function" +ctx.VAR_NAME().toString()+ "isn't defined");
+            e = new RuntimeException("The function '" +ctx.VAR_NAME().toString()+ "' isn't defined");
             System.out.println(e.toString());
             throw e;
         }

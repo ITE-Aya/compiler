@@ -18,11 +18,11 @@ public class Import   {
 
     @Override
     public String toString() {
-        return "import " + child + ";\n";
+        return "import " + child.toString() + ";\n";
     }
    public void checkArray(ArrayList<String> st){
         for (String s: st  ) {
-            if(child.toString() == s)
+            if(child.toString().equals(s) )
                 return ;
         }
         RuntimeException e = new RuntimeException("Target of URI doesn't exist:" + child);
