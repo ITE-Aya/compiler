@@ -1,0 +1,122 @@
+
+import 'package:flutter/cupertino.dart' ;
+
+import 'package:flutter/material.dart';
+
+import 'package:flutter/rendering.dart';
+
+void main() {
+runApp( MyApp());
+}
+
+
+List products =[
+  {
+    'name':'banana',
+    'image':'images/saria.png',
+    'price':'5000\$'
+  }
+  ,
+  {
+    'name':'chiken',
+    'image':'images/cc.png',
+    'price':'3500\$'
+  }
+  ,
+  {
+    'name':'tomato',
+    'image':'images/sss.png',
+    'price':'1000\$'
+  }
+  ,
+  {
+    'name':'apple',
+    'image':'images/ap.png',
+    'price':'7500\$'
+  }
+  ,
+  {
+    'name':'apple',
+    'image':'images/ap.png',
+    'price':'800\$'
+  }
+]
+
+
+class screen extends StatelessWidget{
+  String name;
+  double price;
+  String image;
+  screen({ required this.image, required this.price,required this.name});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+        child: Column(
+
+        children: [
+        Image.asset(image),
+    Text(name),
+    Text(price.toString()),
+
+    ],
+    ),
+
+    ));
+
+  }}
+
+
+class MyApp extends StatelessWidget{
+
+ int x=50;
+  @override
+  Widget build(BuildContext context){return GetMaterialApp(
+      debugShowCheckedModeBanner:false,
+      home:compil()
+  );}
+}
+
+class compil extends StatefulWidget {
+  @override
+  State <compil> createState() => _compilState();
+}
+class _compilState extends State<compil>{
+  String name  = 'Not Found' ;
+  String price  = 'Not Found' ;
+  String mage  = 'Not Found' ;
+
+  @override
+  void initState(){
+    super.initState();}
+  @override
+  Widget build(BuildContext context){
+  return Scaffold(
+      appBar:AppBar(backgroundColor:Colors.black),
+      body:Padding(padding:EdgeInsets.all(8),
+          child:Row(children:[Expanded(child:Column(children:[name=='Not Found'?Text('')  : Container(
+              padding:EdgeInsets.all(6),
+              child:Column(children:[ mage == 'Not Found'?Text('')  : Image.asset ( mage  , fit:BoxFit.fill)
+                , SizedBox ( height:10 ) , name=='Not Found'?Text('')  : Text( name ),SizedBox( height:10 ), price=='Not Found'?Text('')  : Text(price)]),
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius:BorderRadius.circular(5)
+              )
+          )])),SizedBox(width:20),Expanded(child:ListView.separated( itemBuilder: ( context,  index) => GestureDetector(onTap:(){setState((){
+            name=products[index]['name'];
+            price=products[index]['price'];
+            mage=products[index]['image'];
+          });},child:Container(
+
+              padding:EdgeInsets.all(6),
+              child:Column(children:[Image.asset ( products [index]['image'],fit:BoxFit.fill)
+                , SizedBox( height : 10 ),Text( products[index]['name'])]),
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius:BorderRadius.circular(5)
+              )
+          )), separatorBuilder: (context,index)=> SizedBox(height:15),itemCount:products.length))]))
+  );}
+}
+
+
