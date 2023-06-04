@@ -44,7 +44,7 @@ List products =[
 
 
 class screen extends StatelessWidget{
-  String name;
+  String name ;
   double price;
   String image;
   screen({ required this.image, required this.price,required this.name});

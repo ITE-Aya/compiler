@@ -14,8 +14,8 @@ val: string_val |NUM_VAL |BOOL_VAL|VAR_NAME OPEN_PR INDEX CLOSE_PR OPEN_PR strin
 ifdart:
 VAR_NAME EQUAL EQUAL string_val Q_MARK widget D_DOT widget;
 
-arguments: OPEN_HEAD OPEN_BODY  REQUIRED? TYPE?  VAR_NAME  ( COLON TYPE?  VAR_NAME )*CLOSE_BODY CLOSE_HEAD SIMICOLON;
-
+arguments: OPEN_HEAD OPEN_BODY  argument (COLON argument)* CLOSE_BODY CLOSE_HEAD SIMICOLON;
+argument: REQUIRED? TYPE?  VAR_NAME  ;
 block:OPEN_BODY  declear_var*  CLOSE_BODY;
 
 constructor: VAR_NAME arguments ;
